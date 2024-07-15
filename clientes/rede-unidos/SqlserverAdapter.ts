@@ -1,4 +1,3 @@
-import { DataSource } from 'typeorm';
 import * as sql from 'mssql'
 import Connection from './Connection';
 

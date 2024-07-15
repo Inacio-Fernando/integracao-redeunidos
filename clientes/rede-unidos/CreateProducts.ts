@@ -1,5 +1,5 @@
-import { Usecase } from "./application/usecase/Usecase";
-import Product from "./domain/entity/Product";
+import { Usecase } from "./Usecase";
+import Product from "./entity/Product";
 
 export default class CreateProducts implements Usecase {
     constructor(
