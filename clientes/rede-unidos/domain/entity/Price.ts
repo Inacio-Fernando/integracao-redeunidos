@@ -10,16 +10,18 @@ export default class Price {
   private company: number = 1;
   private user: number = 1;
 
-  constructor(input: Price.Input) {
-    const { values, ...properties } = input;
-    Object.assign(this, properties);
-    this.price =
-      values.promotional > 0
-        ? values.promotional.toString()
-        : values.base.toString();
-    this.dynamic = 1;
+  private constructor(input: Price.Create) {
+    Object.assign(this, input);
+    
     return this;
   }
+
+  static createPrice(input: Partial<Price.Create>): Price {
+    
+    return new Price(input)
+  }
+
+  
 
   getState(): Price.Output {
     return {
@@ -38,18 +40,28 @@ export default class Price {
 }
 
 export namespace Price {
-  export type Input = {
-    productId: number;
-    filial: number;
-    startDate?: Date;
-    endDate?: Date;
-    hour?: Date;
-    values: {
-      base: number;
-      promotional: number;
-      cluster: number;
-    };
-  };
+  // export type Create = {
+  //   productId: number;
+  //   filial: number;
+  //   startDate?: Date;
+  //   endDate?: Date;
+  //   hour?: Date;
+  //   values: {
+  //     base: number;
+  //     promotional: number;
+  //     cluster: number;
+  //   };
+  // };
+  export type Create = {
+    id?: number
+    productId: number
+    dynamic: number
+    filial: number
+    startDate: Date
+    endDate: Date
+    price: string
+    hour: Date
+  }
   export type Output = {
     id: number;
     productId: number;

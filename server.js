@@ -14,7 +14,7 @@ app.get('/api/:cliente/:func', async (req, res) => {
     const func = req.params.func;
 
     try {
-        const clienteModule = require(path.join(__dirname, 'clientes', cliente, 'index.ts'));
+        const clienteModule = require(path.join(__dirname, 'clientes', cliente, 'index.js'));
         if (typeof clienteModule[func] !== 'function') {
             return res.status(400).send(`Function ${func} not found in module ${cliente}`);
         }

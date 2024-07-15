@@ -1,25 +1,20 @@
-
-import CreateProducts from './CreateProducts';
-import SqlserverAdapter from './SqlserverAdapter';
-import SqlserverRepository from './SqlserverRepository';
+import CreateProducts from "./application/CreateProducts";
+import MssqlTypeOrmAdapter from "./infra/MssqlTypeOrmAdapter";
+import MysqlTypeOrmAdapter from "./infra/MysqlTypeOrmAdapter ";
+import ProductRepositoryMssql from "./infra/ProductRepositoryMssql";
+import ProductRepositoryMysql from "./infra/ProductRepositoryMysql";
 
 
 const createAll = async () => {
-
-  const db = new SqlserverAdapter();
-  await db.connect();
-  const repo = new SqlserverRepository(db.getConnection())
- 
-  // const cfProductRepository = new ProductRepositoryMysql(
-    //   mysqlConnection.getConnection(),
-    // );
-    
-    const createProductsUsecase = new CreateProducts(
-      repo,
-      // cfProductRepository,
-    );
-    await createProductsUsecase.execute();
-  // createPricesUsecase.execute();
+  const mysql = new MysqlTypeOrmAdapter()
+  const mssql = new MssqlTypeOrmAdapter()
+  await Promise.all(
+    [mysql.connect(), mssql.connect()]
+  )
+  const mysqlRepo = new ProductRepositoryMysql(mysql.getConnection());
+  const mssqlRepo = new ProductRepositoryMssql(mssql.getConnection())
+  const createProducts = new CreateProducts( mssqlRepo, mysqlRepo)
+  createProducts.execute();
 };
 
 export { createAll };

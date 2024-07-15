@@ -1,5 +1,8 @@
+import Price from "./Price";
+
 export default class Product {
   private id: number;
+  private code: number;
   private name: string;
   private description: string;
   private proportion: string;
@@ -10,8 +13,9 @@ export default class Product {
   private establishment: number = 1;
   private sku: string;
   private flag100g: string = '';
+  private prices: Price[]
 
-  constructor(input: Product.Input) {
+  constructor(input: Partial<Product.Input>) {
     Object.assign(this, input);
   }
 
@@ -28,19 +32,23 @@ export default class Product {
       establishment: this.establishment,
       sku: this.sku,
       flag100g: this.flag100g,
+      prices: this.prices
     };
   }
 }
 
 export namespace Product {
   export type Input = {
-    name?: string;
-    description?: string;
-    proportion?: string;
-    session?: string;
-    group?: string;
-    subgroup?: string;
-    sku?: string;
+    id?: number;
+    code?: number | null;
+    name?: string | null;
+    description?: string | null;
+    proportion?: string | null;
+    session?: string | null;
+    group?: string | null;
+    subgroup?: string | null;
+    sku?: string | null;
+    prices?: Price[]
   };
   export type Output = {
     id: number;
@@ -54,5 +62,6 @@ export namespace Product {
     establishment: number;
     sku: string;
     flag100g: string;
+    prices: Price[]
   };
 }
